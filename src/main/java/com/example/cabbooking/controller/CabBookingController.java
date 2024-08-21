@@ -1,20 +1,16 @@
 package com.example.cabbooking.controller;
 import com.example.cabbooking.model.Driver;
-import com.example.cabbooking.model.Location;
-import com.example.cabbooking.service.DriverService;
-import com.example.cabbooking.service.RideService;
-import com.example.cabbooking.service.UserService;
+import com.example.cabbooking.servicetest.DriverService;
+import com.example.cabbooking.servicetest.RideService;
+import com.example.cabbooking.servicetest.UserService;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import com.example.cabbooking.vo.UserDetailsInVO;
-import com.example.cabbooking.vo.VehicleDetailsVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor

@@ -1,12 +1,11 @@
 package com.example.cabbooking.controllertest;
 
-
-
 import com.example.cabbooking.controller.CabBookingController;
 import com.example.cabbooking.model.Driver;
-import com.example.cabbooking.service.DriverService;
-import com.example.cabbooking.service.RideService;
+import com.example.cabbooking.servicetest.DriverService;
+import com.example.cabbooking.servicetest.RideService;
 
+import com.example.cabbooking.servicetest.UserServiceTest;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import com.example.cabbooking.vo.UserDetailsInVO;
@@ -38,7 +37,7 @@ class CabBookingControllerTest {
 
     @Mock
     private UserServiceTest userService;
-
+//test Classes
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -47,13 +46,13 @@ class CabBookingControllerTest {
     @Test
     void addUser_Success() {
         UserDetailsInVO userDetails = new UserDetailsInVO();
-        doNothing().when(userService).clone(any(UserDetailsInVO.class));
+        doNothing().when(userService).addUser(any(UserDetailsInVO.class));
 
         ResponseEntity<String> response = cabBookingController.addUser(userDetails);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals("User added successfully", response.getBody());
-        verify(userService, times(1)).clone(userDetails);
+        verify(userService, times(1)).addUser(userDetails);
     }
 
     @Test

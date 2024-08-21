@@ -1,10 +1,7 @@
-package com.example.cabbooking.service;
+package com.example.cabbooking.servicetest;
 
-import com.example.cabbooking.controller.CabBookingController;
 import com.example.cabbooking.model.Driver;
-import com.example.cabbooking.model.Location;
 import com.example.cabbooking.model.User;
-import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

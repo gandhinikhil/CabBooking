@@ -1,8 +1,6 @@
-package com.example.cabbooking.service;
+package com.example.cabbooking.servicetest;
 
 import com.example.cabbooking.model.Driver;
-import com.example.cabbooking.model.Location;
-import com.example.cabbooking.model.Vehicle;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import com.example.cabbooking.vo.VehicleDetailsVO;

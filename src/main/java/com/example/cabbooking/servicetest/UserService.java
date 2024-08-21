@@ -1,4 +1,4 @@
-package com.example.cabbooking.service;
+package com.example.cabbooking.servicetest;
 
 import com.example.cabbooking.vo.UserDetailsInVO;
 import org.springframework.stereotype.Service;

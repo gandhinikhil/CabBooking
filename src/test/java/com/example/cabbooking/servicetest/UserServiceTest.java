@@ -1,4 +1,4 @@
-package com.example.cabbooking.service;
+package com.example.cabbooking.servicetest;
 
 
 import com.example.cabbooking.model.User;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserServiceTest {
+public class UserServiceTest {
 
     private UserService userService;
 
