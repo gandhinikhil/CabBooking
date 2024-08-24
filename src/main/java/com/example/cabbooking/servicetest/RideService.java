@@ -38,6 +38,9 @@ public class RideService {
             throw new IllegalArgumentException("Driver not found or not available");
         }
     }
+    public double calculateFare(){
+        return 0.0;
+    }
 
 
 }
