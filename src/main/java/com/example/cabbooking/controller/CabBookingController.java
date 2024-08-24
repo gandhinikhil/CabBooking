@@ -6,7 +6,6 @@ import com.example.cabbooking.servicetest.UserService;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import com.example.cabbooking.vo.UserDetailsInVO;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
