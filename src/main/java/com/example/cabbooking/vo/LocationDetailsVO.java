@@ -9,10 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LocationDetailsVO {
-    private int x;
-    private int y;
+    private int xDistance;
+    private int yDistance;
 
     public int distanceTo(LocationDetailsVO source) {
-        return Math.abs(this.x - x) + Math.abs(this.y - y);
+        return Math.abs(this.xDistance - xDistance) + Math.abs(this.yDistance - yDistance);
     }
 }
