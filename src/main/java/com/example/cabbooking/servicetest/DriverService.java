@@ -24,7 +24,7 @@ public class DriverService {
         VehicleDetailsVO vehicleDetailsVO = driverDetailsVO.getVehicle();
         LocationDetailsVO locationDetailsVO = driverDetailsVO.getLocation();
         VehicleDetailsVO vehicle = new VehicleDetailsVO(vehicleDetailsVO.getModel(), vehicleDetailsVO.getRegistrationNumber());
-        LocationDetailsVO location = new LocationDetailsVO(locationDetailsVO.getX(), locationDetailsVO.getY());
+        LocationDetailsVO location = new LocationDetailsVO(locationDetailsVO.getXDistance(), locationDetailsVO.getYDistance());
         DriverDetailsVO driver = new DriverDetailsVO(driverDetailsVO.getName(), driverDetailsVO.getGender(), driverDetailsVO.getAge(), vehicle, location, true);
         drivers.put(driver.getName(), driver);
         System.out.println(driver.getName()+" "+driver.getGender()+" "+driver.getAge()+" "+driver.isAvailable()+" "+driver.getLocation()+" "+driver.getVehicle());

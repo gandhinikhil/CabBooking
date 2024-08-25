@@ -56,8 +56,8 @@ public class RideService {
     }
 
     private double calculateDistance(LocationDetailsVO source, LocationDetailsVO destination) {
-        double xDiff = destination.getX() - source.getX();
-        double yDiff = destination.getY()-source.getY();
+        double xDiff = destination.getXDistance() - source.getXDistance();
+        double yDiff = destination.getYDistance()-source.getYDistance();
         return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
     }
     public void sortedDriversByDistanceToSource(LocationDetailsVO sources, List<RideDetailsVO>driverDetails){
