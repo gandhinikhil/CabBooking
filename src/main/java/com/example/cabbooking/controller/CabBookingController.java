@@ -1,5 +1,5 @@
 package com.example.cabbooking.controller;
-import com.example.cabbooking.model.Driver;
+
 import com.example.cabbooking.servicetest.DriverService;
 import com.example.cabbooking.servicetest.RideService;
 import com.example.cabbooking.servicetest.UserService;
