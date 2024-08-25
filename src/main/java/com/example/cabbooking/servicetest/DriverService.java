@@ -5,7 +5,10 @@ import com.example.cabbooking.model.Location;
 import com.example.cabbooking.model.Vehicle;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
+import com.example.cabbooking.vo.RideDetailsVO;
 import com.example.cabbooking.vo.VehicleDetailsVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +19,9 @@ import java.util.Map;
 @Service
 public class DriverService {
     private final Map<String, Driver> drivers = new HashMap<>();
+    @Autowired
+    @Lazy
+    private RideService rideService;
 
     public void addDriver(DriverDetailsVO driverDetailsVO) {
         VehicleDetailsVO vehicleDetailsVO = driverDetailsVO.getVehicle();
@@ -27,11 +33,13 @@ public class DriverService {
         System.out.println(driver.getName()+" "+driver.getGender()+" "+driver.getAge()+" "+driver.isAvailable()+" "+driver.getCurrentLocation()+" "+driver.getVehicle());
     }
 
-    public List<Driver> findAvailableDrivers(LocationDetailsVO source, int maxDistance) {
-        List<Driver> availableDrivers = new ArrayList<>();
+    public List<RideDetailsVO> findAvailableDrivers(LocationDetailsVO source,LocationDetailsVO destination, int maxDistance) {
+        List<RideDetailsVO> availableDrivers = new ArrayList<>();
         for (Driver driver : drivers.values()) {
             if (driver.isAvailable() && driver.getCurrentLocation().distanceTo(source) <= maxDistance) {
-                availableDrivers.add(driver);
+
+                double fare = rideService.calculateFare(source,destination);
+                availableDrivers.add(new RideDetailsVO(driver,Math.round(fare*100.0)/100.0));
                 System.out.println(driver.getName());
             }
         }
