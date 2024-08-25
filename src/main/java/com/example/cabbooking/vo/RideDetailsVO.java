@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class RideDetailsVO {
-    private Driver driver;
+    private DriverDetailsVO driver;
     private double fare;
 
 }

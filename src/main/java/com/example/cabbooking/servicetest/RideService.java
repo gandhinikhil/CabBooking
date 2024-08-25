@@ -3,12 +3,17 @@ package com.example.cabbooking.servicetest;
 import com.example.cabbooking.constant.FareConstant;
 import com.example.cabbooking.model.Driver;
 import com.example.cabbooking.model.User;
+import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import com.example.cabbooking.vo.RideDetailsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static java.sql.DriverManager.getDriver;
 
 @Service
 public class RideService {
@@ -33,7 +38,7 @@ public class RideService {
     }
 
     public void  chooseRide(String username, String driverName) {
-        Driver driver = driverService.getDriver(driverName);
+        DriverDetailsVO driver = driverService.getDriver(driverName);
         if (driver != null && driver.isAvailable()) {
 
             driver.setAvailable(false); // Mark the driver as not available
@@ -51,10 +56,19 @@ public class RideService {
     }
 
     private double calculateDistance(LocationDetailsVO source, LocationDetailsVO destination) {
-        double xDiff = destination.getX() - source.getX();
-        double yDiff = destination.getY()-source.getY();
+        double xDiff = destination.getXDistance() - source.getXDistance();
+        double yDiff = destination.getYDistance()-source.getYDistance();
         return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
     }
-
+    public void sortedDriversByDistanceToSource(LocationDetailsVO sources, List<RideDetailsVO>driverDetails){
+        Collections.sort(driverDetails, new Comparator<RideDetailsVO>() {
+            @Override
+            public int compare(RideDetailsVO o1, RideDetailsVO o2) {
+                double distanceToO1 = calculateDistance(sources,o1.getDriver().getLocation());
+                double distanceToO2 = calculateDistance(sources,o2.getDriver().getLocation());
+                return Double.compare(distanceToO1,distanceToO2);
+            }
+        });
+    }
 
 }

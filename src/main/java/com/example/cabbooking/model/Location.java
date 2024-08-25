@@ -1,42 +1,16 @@
 package com.example.cabbooking.model;
 
 import com.example.cabbooking.vo.LocationDetailsVO;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Location {
-    private int x;
-    private int y;
-
-    public Location(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int distanceTo(LocationDetailsVO other) {
-        return Math.abs(this.x - x) + Math.abs(this.y - y);
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    @Override
-    public String toString() {
-        return "Location{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
-    }
-    // Getters and Setters
+    private int xDistance;
+    private int yDistance;
 }
