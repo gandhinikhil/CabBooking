@@ -5,6 +5,7 @@ import com.example.cabbooking.servicetest.RideService;
 import com.example.cabbooking.servicetest.UserService;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
+import com.example.cabbooking.vo.RideDetailsVO;
 import com.example.cabbooking.vo.UserDetailsInVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,12 +48,12 @@ public class CabBookingController {
     }
 
     @GetMapping("/find_ride")
-    public ResponseEntity<List<Driver>> findRide(@RequestParam String username, @RequestParam List<Integer> source, @RequestParam List<Integer> destination) {
+    public ResponseEntity<List<RideDetailsVO>> findRide(@RequestParam String username, @RequestParam List<Integer> source, @RequestParam List<Integer> destination) {
          try{
            
-                List<Driver>availableDrivers =rideService.findRide(username, new LocationDetailsVO(source.get(0), source.get(1)), new LocationDetailsVO(destination.get(0), destination.get(1)));
+                List<RideDetailsVO>availableDrivers =rideService.findRide(username, new LocationDetailsVO(source.get(0), source.get(1)), new LocationDetailsVO(destination.get(0), destination.get(1)));
                 if(availableDrivers.isEmpty()) {
-                    ResponseEntity<List<Driver>> listResponseEntity = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                    ResponseEntity<List<RideDetailsVO>> listResponseEntity = new ResponseEntity<>(HttpStatus.NO_CONTENT);
                     return listResponseEntity;
                 }
                 return new ResponseEntity<>(availableDrivers,HttpStatus.OK);
