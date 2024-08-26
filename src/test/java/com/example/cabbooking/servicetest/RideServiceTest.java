@@ -1,9 +1,9 @@
 package com.example.cabbooking.servicetest;
 
 
-import com.example.cabbooking.model.Driver;
-import com.example.cabbooking.model.Location;
-import com.example.cabbooking.model.User;
+import com.example.cabbooking.entity.Driver;
+import com.example.cabbooking.entity.Location;
+import com.example.cabbooking.entity.User;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
