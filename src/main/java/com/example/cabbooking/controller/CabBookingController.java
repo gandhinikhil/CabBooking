@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -32,7 +31,11 @@ public class CabBookingController {
     @PostMapping("/add-user")
     public ResponseEntity<String> addUser(@RequestBody UserDetailsInVO userDetails) {
         try {
+            logger.info("trying to add data");
             userService.addUser(userDetails);
+            logger.info("trying to add data in Local storage");
+            userService.saveUser(userDetails);
+            logger.info("Data save succesfully in DB");
             return new ResponseEntity<>("User added successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to add user", HttpStatus.BAD_REQUEST);
@@ -43,7 +46,11 @@ public class CabBookingController {
     @PostMapping("/add-driver")
     public ResponseEntity<String> addDriver(@RequestBody DriverDetailsVO driverDetailsVO) {
         try {
+            logger.info("Trying to add driver data");
             driverService.addDriver(driverDetailsVO);
+            logger.info("Trying to add driver data in local storage");
+            driverService.saveDriver(driverDetailsVO);
+            logger.info("Trying to add driver data in DB");
             return new ResponseEntity<>("Driver added Successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to add Driver", HttpStatus.BAD_REQUEST);
