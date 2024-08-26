@@ -1,9 +1,18 @@
 package com.example.cabbooking.servicetest;
 
+import com.example.cabbooking.controller.CabBookingController;
+import com.example.cabbooking.entity.Driver;
+import com.example.cabbooking.entity.Location;
+import com.example.cabbooking.entity.Vehicle;
+import com.example.cabbooking.repository.DriverRepository;
+import com.example.cabbooking.repository.LocationRepository;
+import com.example.cabbooking.repository.VehicleRepository;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import com.example.cabbooking.vo.RideDetailsVO;
 import com.example.cabbooking.vo.VehicleDetailsVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -19,7 +28,13 @@ public class DriverService {
     @Autowired
     @Lazy
     private RideService rideService;
-
+    @Autowired
+    private DriverRepository driverRepository;
+    @Autowired
+    private LocationRepository locationRepository;
+    @Autowired
+    private VehicleRepository vehicleRepository;
+    private static final Logger logger = LoggerFactory.getLogger(CabBookingController.class);
     public void addDriver(DriverDetailsVO driverDetailsVO) {
         VehicleDetailsVO vehicleDetailsVO = driverDetailsVO.getVehicle();
         LocationDetailsVO locationDetailsVO = driverDetailsVO.getLocation();
@@ -29,6 +44,25 @@ public class DriverService {
         drivers.put(driver.getName(), driver);
         System.out.println(driver.getName()+" "+driver.getGender()+" "+driver.getAge()+" "+driver.isAvailable()+" "+driver.getLocation()+" "+driver.getVehicle());
     }
+    public void saveDriver(DriverDetailsVO driverDetailsVO){
+        VehicleDetailsVO vehicleDetailsVO = driverDetailsVO.getVehicle();
+        LocationDetailsVO locationDetailsVO =driverDetailsVO.getLocation();
+        Driver driver = new Driver();
+        Location location= new Location();
+        Vehicle vehicle = new Vehicle();
+        driver.setName(driverDetailsVO.getName());
+        driver.setAge(driverDetailsVO.getAge());
+        driver.setGender(driver.getGender())
+        driver.setAvailable(driverDetailsVO.isAvailable());
+        vehicle.setModel(vehicleDetailsVO.getModel());
+        vehicle.setRegistrationNumber(vehicleDetailsVO.getRegistrationNumber());
+        location.setXDistance(locationDetailsVO.getXDistance());
+        logger.info(String.valueOf(locationDetailsVO.getXDistance()));
+        location.setYDistance(locationDetailsVO.getYDistance());
+        vehicleRepository.save(vehicle);
+        locationRepository.save(location);
+        driverRepository.save(driver);
+         }
 
     public List<RideDetailsVO> findAvailableDrivers(LocationDetailsVO source,LocationDetailsVO destination, int maxDistance) {
         List<RideDetailsVO> availableDrivers = new ArrayList<>();

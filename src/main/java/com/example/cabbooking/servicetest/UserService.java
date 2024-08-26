@@ -1,23 +1,40 @@
 package com.example.cabbooking.servicetest;
 
+import com.example.cabbooking.entity.User;
+import com.example.cabbooking.repository.UserRepository;
 import com.example.cabbooking.vo.UserDetailsInVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.cabbooking.model.User;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @Service
 public class UserService {
-    private final Map<String, User> users = new HashMap<>();
+    @Autowired
+    private final UserRepository userRepository;
+    private final Map<String, UserDetailsInVO> users = new HashMap<>();
+
+   public UserService(UserRepository userRepository){
+        this.userRepository= userRepository;
+    }
 
 
 
     public void addUser(UserDetailsInVO userDetails) {
-        User user = new User(userDetails.getUserName(), userDetails.getGender(), userDetails.getAge());
-        users.put(user.getName(), user);
+        UserDetailsInVO user = new UserDetailsInVO(1,userDetails.getUserName(), userDetails.getGender(), userDetails.getAge(), LocalDateTime.now());
+        users.put(user.getUserName(), user);
+    }
+    public User saveUser(UserDetailsInVO userDetailsInVO){
+        User user = new User();
+        user.setName(userDetailsInVO.getUserName());
+        user.setAge(userDetailsInVO.getAge());
+        user.setGender(userDetailsInVO.getGender());
+        return userRepository.save(user);
     }
 
-    public User getUser(String username) {
+    public UserDetailsInVO getUser(String username) {
         return users.get(username);
     }
 }
