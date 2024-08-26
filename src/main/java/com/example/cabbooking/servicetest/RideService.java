@@ -1,19 +1,16 @@
 package com.example.cabbooking.servicetest;
 
 import com.example.cabbooking.constant.FareConstant;
-import com.example.cabbooking.model.Driver;
-import com.example.cabbooking.model.User;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import com.example.cabbooking.vo.RideDetailsVO;
+import com.example.cabbooking.vo.UserDetailsInVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import static java.sql.DriverManager.getDriver;
 
 @Service
 public class RideService {
@@ -28,8 +25,8 @@ public class RideService {
     }
 
     public List<RideDetailsVO> findRide(String username, LocationDetailsVO source, LocationDetailsVO destination) {
-        User user = userService.getUser(username);
-        System.out.println(user.getName());
+        UserDetailsInVO user = userService.getUser(username);
+        System.out.println(user.getUserName());
         if (user == null) {
             throw new IllegalArgumentException("User not found");
         }
