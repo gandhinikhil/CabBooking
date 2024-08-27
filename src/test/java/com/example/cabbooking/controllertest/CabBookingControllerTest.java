@@ -1,7 +1,7 @@
 package com.example.cabbooking.controllertest;
 
 import com.example.cabbooking.controller.CabBookingController;
-import com.example.cabbooking.model.Driver;
+import com.example.cabbooking.entity.Driver;
 import com.example.cabbooking.servicetest.DriverService;
 import com.example.cabbooking.servicetest.RideService;
 

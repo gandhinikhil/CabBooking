@@ -1,7 +1,4 @@
 package com.example.cabbooking.vo;
-
-import com.example.cabbooking.model.Location;
-import com.example.cabbooking.model.Vehicle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

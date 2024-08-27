@@ -1,7 +1,7 @@
 package com.example.cabbooking.servicetest;
 
 
-import com.example.cabbooking.model.User;
+import com.example.cabbooking.entity.User;
 import com.example.cabbooking.vo.UserDetailsInVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
