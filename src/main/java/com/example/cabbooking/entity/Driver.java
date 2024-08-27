@@ -26,7 +26,7 @@ public class Driver {
     private Vehicle vehicle;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
-    private Location loaction;
+    private Location location;
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
     private List<Ride> ride;
     private LocalDateTime localDateTime = LocalDateTime.now();

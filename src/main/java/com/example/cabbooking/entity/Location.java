@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,5 +19,7 @@ public class Location {
     private long id;
     private int xDistance;
     private int yDistance;
+    @OneToOne(mappedBy = "location")
+    private Driver driver;
     private LocalDateTime localDateTime = LocalDateTime.now();
 }
