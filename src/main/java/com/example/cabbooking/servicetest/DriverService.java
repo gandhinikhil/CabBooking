@@ -1,5 +1,4 @@
 package com.example.cabbooking.servicetest;
-
 import com.example.cabbooking.controller.CabBookingController;
 import com.example.cabbooking.entity.Driver;
 import com.example.cabbooking.entity.Location;
@@ -42,7 +41,6 @@ public class DriverService {
         LocationDetailsVO location = new LocationDetailsVO(locationDetailsVO.getXDistance(), locationDetailsVO.getYDistance());
         DriverDetailsVO driver = new DriverDetailsVO(driverDetailsVO.getName(), driverDetailsVO.getGender(), driverDetailsVO.getAge(), vehicle, location, true);
         drivers.put(driver.getName(), driver);
-        System.out.println(driver.getName() + " " + driver.getGender() + " " + driver.getAge() + " " + driver.isAvailable() + " " + driver.getLocation() + " " + driver.getVehicle());
     }
 
     public void saveDriver(DriverDetailsVO driverDetailsVO) {

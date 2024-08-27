@@ -1,5 +1,4 @@
 package com.example.cabbooking.vo;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

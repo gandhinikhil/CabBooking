@@ -1,5 +1,4 @@
 package com.example.cabbooking.entity;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,5 +21,10 @@ public class Vehicle {
     private String registrationNumber;
     @OneToOne(mappedBy = "vehicle")
     private Driver driver;
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }

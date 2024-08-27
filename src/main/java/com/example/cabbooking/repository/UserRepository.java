@@ -1,5 +1,4 @@
 package com.example.cabbooking.repository;
-
 import com.example.cabbooking.entity.User;
 import com.example.cabbooking.vo.UserDetailsInVO;
 import org.springframework.data.jpa.repository.JpaRepository;

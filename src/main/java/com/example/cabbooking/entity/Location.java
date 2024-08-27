@@ -1,5 +1,4 @@
 package com.example.cabbooking.entity;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="locations")
+@Table(name = "locations")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,5 +20,10 @@ public class Location {
     private int yDistance;
     @OneToOne(mappedBy = "location")
     private Driver driver;
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }

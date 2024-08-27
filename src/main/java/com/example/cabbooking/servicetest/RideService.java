@@ -1,5 +1,4 @@
 package com.example.cabbooking.servicetest;
-
 import com.example.cabbooking.constant.FareConstant;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
