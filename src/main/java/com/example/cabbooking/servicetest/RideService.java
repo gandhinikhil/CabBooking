@@ -1,11 +1,17 @@
 package com.example.cabbooking.servicetest;
+
 import com.example.cabbooking.constant.FareConstant;
+import com.example.cabbooking.customExecption.AlreadyCanceledException;
+import com.example.cabbooking.customExecption.RideNotFoundException;
+import com.example.cabbooking.entity.Ride;
+import com.example.cabbooking.repository.RideRepository;
 import com.example.cabbooking.vo.DriverDetailsVO;
 import com.example.cabbooking.vo.LocationDetailsVO;
 import com.example.cabbooking.vo.RideDetailsVO;
 import com.example.cabbooking.vo.UserDetailsInVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -16,6 +22,8 @@ public class RideService {
     private final UserService userService;
     @Autowired
     private final DriverService driverService;
+    @Autowired
+    private RideRepository rideRepository;
 
     public RideService(UserService userService, DriverService driverService) {
         this.userService = userService;
@@ -28,12 +36,12 @@ public class RideService {
         if (user == null) {
             throw new IllegalArgumentException("User not found");
         }
-
-        return driverService.findAvailableDrivers(source,destination,5); // Max distance of 5 units
+        return driverService.findAvailableDrivers(source, destination, 5); // Max distance of 5 units
     }
 
-    public void  chooseRide(String username, String driverName) {
+    public void chooseRide(String username, String driverName) {
         DriverDetailsVO driver = driverService.getDriver(driverName);
+        Ride ride = new Ride();
         if (driver != null && driver.isAvailable()) {
 
             driver.setAvailable(false); // Mark the driver as not available
@@ -41,10 +49,11 @@ public class RideService {
             throw new IllegalArgumentException("Driver not found or not available");
         }
     }
-    public double calculateFare(LocationDetailsVO source,LocationDetailsVO destination){
-        double distance  = calculateDistance(source,destination);
+
+    public double calculateFare(LocationDetailsVO source, LocationDetailsVO destination) {
+        double distance = calculateDistance(source, destination);
         double distanceFare = distance * FareConstant.PER_KM_RATE;
-        double taxAmount =  distanceFare * FareConstant.TAX_RATE;
+        double taxAmount = distanceFare * FareConstant.TAX_RATE;
 
         return FareConstant.BASE_FARE + distanceFare + taxAmount + FareConstant.PLATFORM_CHARGE;
 
@@ -52,18 +61,29 @@ public class RideService {
 
     private double calculateDistance(LocationDetailsVO source, LocationDetailsVO destination) {
         double xDiff = destination.getXDistance() - source.getXDistance();
-        double yDiff = destination.getYDistance()-source.getYDistance();
+        double yDiff = destination.getYDistance() - source.getYDistance();
         return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
     }
-    public void sortedDriversByDistanceToSource(LocationDetailsVO sources, List<RideDetailsVO>driverDetails){
+
+    public void sortedDriversByDistanceToSource(LocationDetailsVO sources, List<RideDetailsVO> driverDetails) {
         Collections.sort(driverDetails, new Comparator<RideDetailsVO>() {
             @Override
             public int compare(RideDetailsVO o1, RideDetailsVO o2) {
-                double distanceToO1 = calculateDistance(sources,o1.getDriver().getLocation());
-                double distanceToO2 = calculateDistance(sources,o2.getDriver().getLocation());
-                return Double.compare(distanceToO1,distanceToO2);
+                double distanceToO1 = calculateDistance(sources, o1.getDriver().getLocation());
+                double distanceToO2 = calculateDistance(sources, o2.getDriver().getLocation());
+                return Double.compare(distanceToO1, distanceToO2);
             }
         });
     }
 
+    public void cancelRide(String userName, String driverName) {
+        Ride ride = rideRepository.findByUserNameAndDriverName(userName, driverName)
+                .orElseThrow(() -> new RideNotFoundException("Ride not found for user: " + userName + " with driver: " + driverName));
+
+        if (ride.isCanceled()) {
+            throw new AlreadyCanceledException("Ride already canceled for user: " + userName + " with driver: " + driverName);
+        }
+        ride.setCanceled(true);
+        rideRepository.save(ride);
+    }
 }

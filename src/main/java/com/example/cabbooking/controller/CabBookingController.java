@@ -1,5 +1,7 @@
 package com.example.cabbooking.controller;
 
+import com.example.cabbooking.customExecption.AlreadyCanceledException;
+import com.example.cabbooking.customExecption.RideNotFoundException;
 import com.example.cabbooking.servicetest.DriverService;
 import com.example.cabbooking.servicetest.RideService;
 import com.example.cabbooking.servicetest.UserService;
@@ -35,7 +37,7 @@ public class CabBookingController {
             userService.addUser(userDetails);
             logger.info("trying to add data in Local storage");
             userService.saveUser(userDetails);
-            logger.info("Data save succesfully in DB");
+            logger.info("Data save successfully in DB");
             return new ResponseEntity<>("User added successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to add user", HttpStatus.BAD_REQUEST);
@@ -63,7 +65,7 @@ public class CabBookingController {
         try {
 
             List<RideDetailsVO> availableDrivers = rideService.findRide(username, new LocationDetailsVO(source.get(0), source.get(1)), new LocationDetailsVO(destination.get(0), destination.get(1)));
-            logger.info("available Drivers "+availableDrivers.size() +" Size of list");
+            logger.info("available Drivers " + availableDrivers.size() + " Size of list");
             if (availableDrivers.isEmpty()) {
                 ResponseEntity<List<RideDetailsVO>> listResponseEntity = new ResponseEntity<>(HttpStatus.NO_CONTENT);
                 if (!ObjectUtils.isEmpty(listResponseEntity))
@@ -73,7 +75,7 @@ public class CabBookingController {
             }
             return new ResponseEntity<>(availableDrivers, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error occured with Exception "+e);
+            logger.error("Error occurred with Exception " + e);
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         // How we return here http request here
@@ -83,11 +85,29 @@ public class CabBookingController {
     public synchronized ResponseEntity<String> chooseRide(@RequestParam String userName, @RequestParam String driverName) {
         try {
             rideService.chooseRide(userName, driverName);
-            return new ResponseEntity<>("Ride Choosen Succesfully", HttpStatus.OK);
+            return new ResponseEntity<>("Ride Chosen Successfully", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to Choose Ride", HttpStatus.BAD_REQUEST);
         }
     }
 
+    @PostMapping("/cancel-ride")
+    public ResponseEntity<String> cancelRide(@RequestParam String userName, @RequestParam String driverName) {
+        try {
+            rideService.cancelRide(userName, driverName);
+            return new ResponseEntity<>("Ride Cancel Successfully", HttpStatus.OK);
+        } catch (RideNotFoundException e) {
+            logger.error("Ride not found for user: " + userName + " with driver: " + driverName);
+            return new ResponseEntity<>("Ride not found", HttpStatus.NOT_FOUND);
+        } catch (AlreadyCanceledException e) {
+            logger.error("Ride Already Canceled for user: " + userName + " with driver: " + driverName);
+            return new ResponseEntity<>("Ride Already canceled", HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            logger.error("Failed to cancel ride for user: " + userName + " with driver: " + driverName);
+            return new ResponseEntity<>("Failed to Cancel Ride", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
+
+
 
