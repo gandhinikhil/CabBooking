@@ -43,7 +43,6 @@ public class RideService {
         DriverDetailsVO driver = driverService.getDriver(driverName);
         Ride ride = new Ride();
         if (driver != null && driver.isAvailable()) {
-
             driver.setAvailable(false); // Mark the driver as not available
         } else {
             throw new IllegalArgumentException("Driver not found or not available");
@@ -77,6 +76,10 @@ public class RideService {
     }
 
     public void cancelRide(String userName, String driverName) {
+        if (userName == null || driverName == null){
+            throw new IllegalArgumentException("Username and driver must not be null");
+
+        }
         Ride ride = rideRepository.findByUserNameAndDriverName(userName, driverName)
                 .orElseThrow(() -> new RideNotFoundException("Ride not found for user: " + userName + " with driver: " + driverName));
 
@@ -85,5 +88,7 @@ public class RideService {
         }
         ride.setCanceled(true);
         rideRepository.save(ride);
+
+
     }
 }
