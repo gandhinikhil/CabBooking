@@ -11,5 +11,6 @@ import lombok.Setter;
 public class RideDetailsVO {
     private DriverDetailsVO driver;
     private double fare;
+    private boolean isCanceled;
 
 }

@@ -74,7 +74,7 @@ public class DriverService {
         for (DriverDetailsVO driver : drivers.values()) {
             if (driver.isAvailable() && driver.getLocation().distanceTo(source) <= maxDistance) {
                 double fare = rideService.calculateFare(source, destination);
-                availableDrivers.add(new RideDetailsVO(driver, Math.round(fare * 100.0) / 100.0));
+                availableDrivers.add(new RideDetailsVO(driver, Math.round(fare * 100.0) / 100.0,true));
                 System.out.println(driver.getName());
             }
         }

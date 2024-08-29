@@ -27,7 +27,9 @@ public class Ride {
     private double destinationX;
     private double destinationY;
     private double fare;
+    private boolean canceled;
     private LocalDateTime createdAt;
+
 
     @PrePersist
     protected void onCreate() {
